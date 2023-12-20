@@ -10,8 +10,10 @@ function SearchPage() {
 const [{ term }, dispatch] = useStateValue();
 const { data } = useGoogleSearch(term);
 const { searchInformation: searchInfo, items } = data ? data : '';
-console.log("item",items);
-  return (
+
+console.log("items",items);
+
+return (
     <div className='searchPage'>
         <div className='searchPage_header'>
             <Link to ='/' >
@@ -25,10 +27,12 @@ console.log("item",items);
             <div className='searchResult_about'>About {searchInfo.formattedTotalResults} results ({searchInfo.formattedSearchTime}) </div>
             <div className='searchResult_list'>
                 <div className='result_left'>
-                    <ul>{items.map( item => (
+                    <ul>{items?.map( item => (
                         <li className='searchResult_block' key={item.title}>
                             <a className='thumb'>
-                                <img src={item?.pagemap?.cse_image[0].src} alt="thumb image" width='18px' height='18px'/>
+                                {item?.pagemap?.cse_image ? <img src={item?.pagemap?.cse_image[0].src} alt="thumb image" /> 
+                                : <span className='noimg'></span>
+                                }
                                 <p>
                                 <span className='title'>{item.title}</span>
                                 {item.link}</p>
